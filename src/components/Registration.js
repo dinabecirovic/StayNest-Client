@@ -1,10 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
 import axios from "axios";
 import { MyContext } from "../context/my-context";
 import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
+    const [roles, setRoles] = useState([]);
+    const [userRole, setUserRole] = useState(""); 
     const[firstName, setFirstName] =  useState("");
     const[firstNameMessage, setFirstNameMessage] =  useState(null);
     const[lastName, setLastName] =  useState("");
@@ -20,6 +22,21 @@ const Registration = () => {
     const { setUserFunction } = useContext(MyContext);
     const[visible, setVisible] = useState(true)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const response = await axios.get(
+                    "https://localhost:7168/api/User/valid-roles"
+                );
+                setRoles(response.data); 
+            } catch (error) {
+                console.error("Error fetching roles:", error);
+            }
+        };
+
+        fetchRoles();
+    }, []);
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
@@ -56,6 +73,7 @@ const Registration = () => {
             const response = await axios.post(
                 "https://localhost:7168/api/User/register", 
                 {
+                    userRole,
                     firstName, 
                     lastName,
                     email,
@@ -72,14 +90,23 @@ const Registration = () => {
             ] = `Bearer ${responseData.token}`;
 
             setUserFunction(responseData);
-
+            
+            setUserRole('');
             setFirstName('');
             setLastName('');
             setEmail('');
             setUsername('');
             setPassword('');
 
-            navigate('/home')
+            if (userRole === "Administrator") {
+                navigate('/administrator_dashboard');
+            } else if (userRole === "BungalowOwner") {
+                navigate('/administrator_dashboard');
+            } else if (userRole === "User") {
+                navigate('/home');
+            } else {
+                alert("Nepoznata uloga korisnika.");
+            }
         }
         catch (e) {
             console.log("Error", e);
@@ -87,76 +114,84 @@ const Registration = () => {
     }
 
     return (
-        <div className="auth-page">
+      <div className="auth-page">
           <div className="auth-page-div">
-            <form onSubmit={onSubmitHandler}>
-              <div className="auth-page-input">
-                <input
-                  type="text"
-                  placeholder="Ime"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  value={firstName}
-                />
-                {firstNameMessage && (
-                  <p className="input-alert">{firstNameMessage}</p>
-                )}
-              </div>
-              <div className="auth-page-input">
-                <input
-                  type="text"
-                  placeholder="Prezime"
-                  onChange={(e) => setLastName(e.target.value)}
-                  value={lastName}
-                />
-                {lastNameMessage && (
-                  <p className="input-alert">{lastNameMessage}</p>
-                )}
-              </div>
-              <div className="auth-page-input">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                />
-                {emailMessage && <p className="input-alert">{emailMessage}</p>}
-              </div>
-              <div className="auth-page-input">
-                <input
-                  type="date"
-                  onChange={(e) => setBirthDate(e.target.value)}
-                  value={birthDate}
-                />
-                {birthDateMessage && <p className="input-alert">{birthDateMessage}</p>}
-              </div>
-              <div className="auth-page-input">
-                <input
-                  type="text"
-                  placeholder="Korisničko ime"
-                  onChange={(e) => setUsername(e.target.value)}
-                  value={username}
-                />
-                {usernameMessage && (
-                  <p className="input-alert">{usernameMessage}</p>
-                )}
-              </div>
-              <div className="auth-page-input">
-                <input
-                  type="password"
-                  placeholder="Lozinka"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                />
-                {passwordMessage && (
-                  <p className="input-alert">{passwordMessage}</p>
-                )}
-              </div>
-              <input type="submit" value="Registruj se" />
-            </form>
-            <div className="auth-page-input"></div>
+              <form onSubmit={onSubmitHandler}>
+                  <div className="auth-page-input">
+                    <select
+                        value={userRole}
+                        onChange={(e) => setUserRole(e.target.value)}
+                    >
+                        <option value="" disabled>
+                            Prijavite se kao
+                        </option>
+                        {roles.map((role, index) => (
+                            <option key={index} value={role}>
+                                {role === "User"
+                                    ? "Korisnik"
+                                    : "Vlasnik bungalova"}
+                            </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="auth-page-input">
+                      <input
+                          type="text"
+                          placeholder="Ime"
+                          onChange={(e) => setFirstName(e.target.value)}
+                          value={firstName}
+                      />
+                      {firstNameMessage && <p className="input-alert">{firstNameMessage}</p>}
+                  </div>
+                  <div className="auth-page-input">
+                      <input
+                          type="text"
+                          placeholder="Prezime"
+                          onChange={(e) => setLastName(e.target.value)}
+                          value={lastName}
+                      />
+                      {lastNameMessage && <p className="input-alert">{lastNameMessage}</p>}
+                  </div>
+                  <div className="auth-page-input">
+                      <input
+                          type="email"
+                          placeholder="Email"
+                          onChange={(e) => setEmail(e.target.value)}
+                          value={email}
+                      />
+                      {emailMessage && <p className="input-alert">{emailMessage}</p>}
+                  </div>
+                  <div className="auth-page-input">
+                      <input
+                          type="date"
+                          onChange={(e) => setBirthDate(e.target.value)}
+                          value={birthDate}
+                      />
+                      {birthDateMessage && <p className="input-alert">{birthDateMessage}</p>}
+                  </div>
+                  <div className="auth-page-input">
+                      <input
+                          type="text"
+                          placeholder="Korisničko ime"
+                          onChange={(e) => setUsername(e.target.value)}
+                          value={username}
+                      />
+                      {usernameMessage && <p className="input-alert">{usernameMessage}</p>}
+                  </div>
+                  <div className="auth-page-input">
+                      <input
+                          type="password"
+                          placeholder="Lozinka"
+                          onChange={(e) => setPassword(e.target.value)}
+                          value={password}
+                      />
+                      {passwordMessage && <p className="input-alert">{passwordMessage}</p>}
+                  </div>
+                  <input type="submit" value="Registruj se" />
+              </form>
           </div>
-        </div>
-      );
-    };
+      </div>
+  );
+};
 
 export default Registration

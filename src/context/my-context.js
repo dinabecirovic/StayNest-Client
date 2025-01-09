@@ -9,7 +9,7 @@ export const MyContext = createContext({
 
 export const MyContextProvider = (props) => {
   const [user, setUser] = useState(null);
-  const [firstName, setFirstName] = useState("Ela");
+  const [firstName, setFirstName] = useState("");
 
   const changeFirstName = (fn) => {
     setFirstName(fn);
