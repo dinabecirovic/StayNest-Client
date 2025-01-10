@@ -12,8 +12,9 @@ const UsersTable = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("/api/User"); 
+      const response = await axios.get("/api/Administrator/users"); 
       setUsers(response.data);
+      console.log(response.data)
     } catch (err) {
       setError("Greška pri dohvatanju korisnika.");
     } finally {
