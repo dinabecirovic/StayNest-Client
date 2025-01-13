@@ -3,6 +3,8 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { MyContext } from "../context/my-context";
 import { useNavigate } from "react-router-dom";
+import "../components/Navbar.js";
+import "./styles/Login.css";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -52,9 +54,9 @@ const Login = () => {
             if (responseData.role === "Administrator") {
                 navigate("/administrator_dashboard");
             } else if (responseData.role === "BungalowOwner") {
-                navigate("/bungalow_owner_dashboard");
+                navigate("/create_advertisement");
             } else if (responseData.role === "User") {
-                navigate("/home");
+                navigate("/user");
             } else {
                 alert("Nepoznata uloga korisnika.");
             }

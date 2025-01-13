@@ -73,7 +73,7 @@ const Registration = () => {
             const response = await axios.post(
                 "https://localhost:7168/api/User/register", 
                 {
-                    userRole,
+                    Roles: userRole,
                     firstName, 
                     lastName,
                     email,
@@ -98,15 +98,8 @@ const Registration = () => {
             setUsername('');
             setPassword('');
 
-            if (userRole === "Administrator") {
-                navigate('/administrator_dashboard');
-            } else if (userRole === "BungalowOwner") {
-                navigate('/administrator_dashboard');
-            } else if (userRole === "User") {
-                navigate('/home');
-            } else {
-                alert("Nepoznata uloga korisnika.");
-            }
+            navigate('/login');
+           
         }
         catch (e) {
             console.log("Error", e);
