@@ -1,130 +1,177 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import AdvertisementsList from "./AdvertisementsList";
 import { useNavigate } from "react-router-dom";
+import "../styles/CreateAdvertisement.css";
 
-const CreateAdvertisement = () => {
-    const [urlPhoto, setUrlPhoto] = useState("");
-    const [numbersOfRooms, setNumberOfRooms] = useState("");
-    const [buildingArea, setBuildingArea] = useState("");
-    const [location, setLocation] = useState("");
-    const [price, setPrice] = useState("");
-    const [description, setDescription] = useState("");
-    const [available, setAvailable] = useState(true);
-    const [error, setError] = useState("");
-    const [refresh, setRefresh] = useState(false);
-    const navigate = useNavigate()
+function CreateAdvertisement({ onClose, onAdCreated }) {
+  const [photos, setPhotos] = useState([]);
+  const [previewPhotos, setPreviewPhotos] = useState([]);
+  const [numbersOfRooms, setNumberOfRooms] = useState("");
+  const [buildingArea, setBuildingArea] = useState("");
+  const [location, setLocation] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [isAvailable, setIsAvailable] = useState(true);
+  const [createdAd, setCreatedAd] = useState(null);
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(true);
 
-    const create = async (e) => {
-        e.preventDefault();
+  const locations = [
+    "Srbija",
+    "Hrvatska",
+    "Bosna i Hercegovina",
+    "Crna Gora",
+    "Slovenija",
+    "Severna Makedonija",
+    "Kosovo",
+  ];
 
-        try {
-            const response = await axios.post(
-                "https://localhost:7168/api/Advertisement/create", 
-                {
-                    urlPhoto,
-                    numbersOfRooms,
-                    buildingArea,
-                    location,
-                    price,
-                    description,
-                    available,
-                }
-            );
-            const responseData = response.data;
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    setPhotos((prevPhotos) => [...prevPhotos, ...files]);
+    const previewUrls = files.map((file) => URL.createObjectURL(file));
+    setPreviewPhotos((prevPreview) => [...prevPreview, ...previewUrls]);
+  };
 
-            if (responseData.token) {
-                axios.defaults.headers.common["Authorization"] = `Bearer ${responseData.token}`;
-            }
+  const create = async (e) => {
+    e.preventDefault();
 
-            setUrlPhoto("");
-            setNumberOfRooms("");
-            setBuildingArea("");
-            setLocation("");
-            setPrice("");
-            setDescription("");
-            setAvailable(true); 
+    try {
+      const formData = new FormData();
+      photos.forEach((photo) => formData.append("Photos", photo));
+      formData.append("numbersOfRooms", numbersOfRooms);
+      formData.append("buildingArea", buildingArea);
+      formData.append("location", location);
+      formData.append("description", description);
+      formData.append("IsAvailable", isAvailable.toString());
 
-            navigate('/advertisements_list');
-        } catch (e) {
-            console.error("Error", e);
-            setError("Failed to create advertisement. Please try again.");
+      await axios.post("/api/Advertisement/create", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      setPhotos([]);
+      setNumberOfRooms("");
+      setBuildingArea("");
+      setLocation("");
+      setDescription("");
+      setIsAvailable(true);
+      navigate("/advertisements_list");
+
+      setTimeout(() => {
+        if (onAdCreated) {
+          onAdCreated();
         }
-    };
+        onClose();
+      }, 500);
 
-    return (
-        <div className="container">
-            <div className="advertisement-holder">
-                <form onSubmit={create}>
-                    <div>
-                        <label>Photo URL:</label>
-                        <input
-                            type="text"
-                            value={urlPhoto}
-                            onChange={(e) => setUrlPhoto(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Number of Rooms:</label>
-                        <input
-                            type="number"
-                            value={numbersOfRooms}
-                            onChange={(e) => setNumberOfRooms(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Building Area (sqm):</label>
-                        <input
-                            type="number"
-                            value={buildingArea}
-                            onChange={(e) => setBuildingArea(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Location:</label>
-                        <input
-                            type="text"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Price:</label>
-                        <input
-                            type="number"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Description:</label>
-                        <textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>
-                            Available:
-                            <input
-                                type="checkbox"
-                                checked={available}
-                                onChange={(e) => setAvailable(e.target.checked)}
-                            />
-                        </label>
-                    </div>
-                    <button type="submit">Create Advertisement</button>
-                    {error && <p className="error">{error}</p>}
-                </form>
+      onClose();
+    } catch (e) {
+      console.error(e);
+      setError(
+        "Došlo je do greške prilikom kreiranja posta. Pokušajte ponovo."
+      );
+    }
+  };
+
+  return (
+    showModal && (
+      <div className="modal-overlay">
+        <div className="modal-container">
+          <button className="modal-close" onClick={() => setShowModal(false)}>
+            ✖
+          </button>
+          <div className="modal-header">KREIRAJ OGLAS</div>
+          <hr />
+          <form onSubmit={create} className="create-post-form">
+            <div className="form-group photo-upload-container">
+              <label htmlFor="file-upload" className="photo-upload-button">
+                Izaberi fotografiju
+              </label>
+              <input
+                id="file-upload"
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+              <div className="photo-preview-grid">
+                {previewPhotos.map((photo, index) => (
+                  <img
+                    key={index}
+                    src={photo}
+                    alt={`pregled ${index + 1}`}
+                    className="photo-preview"
+                  />
+                ))}
+              </div>
             </div>
+
+            <div className="form-group">
+              <input
+                type="number"
+                name="numbersOfRooms"
+                placeholder="Broj soba"
+                onChange={(e) => setNumberOfRooms(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="number"
+                name="buildingArea"
+                placeholder="Površina objekta"
+                onChange={(e) => setBuildingArea(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <select
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              >
+                <option value="">Izaberi državu</option>
+                {locations.map((location, index) => (
+                  <option key={index} value={location}>
+                    {location}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <input
+                type="number"
+                name="price"
+                placeholder="Cena"
+                onChange={(e) => setPrice(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <textarea
+                name="description"
+                placeholder="Opis"
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isAvailable}
+                  onChange={(e) => setIsAvailable(e.target.checked)}
+                />
+                Dostupno za iznajmljivanje
+              </label>
+            </div>
+            <button type="submit">Kreiraj</button>
+          </form>
         </div>
-    );
-};
+      </div>
+    )
+  );
+}
 
 export default CreateAdvertisement;
