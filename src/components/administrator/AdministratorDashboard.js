@@ -4,12 +4,10 @@ import AdvertisementsTable from "./AdvertisementsTable";
 import "../styles/AdministratorDashboard.css";
 
 const AdministratorDashboard = () => {
-  const [selectedTable, setSelectedTable] = useState("users"); // Po defaultu prikazuje korisnike
+  const [selectedTable, setSelectedTable] = useState("users");
 
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-title">Administratorska Kontrola</h1>
-
       {/* Dugmad za izbor prikaza */}
       <div className="button-container">
         <button

@@ -49,8 +49,6 @@ const UsersTable = () => {
 
   return (
     <div className="table-container">
-      <h1 className="table-title">Lista korisnika</h1>
-
       {/* Input za pretragu */}
       <div className="search-container">
         <input

@@ -33,13 +33,14 @@
 
 .modal-close {
   position: absolute;
-  top: 40px;
+  margin-top: 3%;
   left: 200px;
   font-size: 18px;
   cursor: pointer;
   border: none;
   background: none;
   color: rgb(61, 61, 61);
+  z-index: 1;
 }
 
 .filter-section select {

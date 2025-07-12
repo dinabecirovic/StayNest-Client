@@ -43,19 +43,37 @@ const Registration = ({ closeRegisterPanel }) => {
   const generateVerificationCode = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
   };
-  const sendVerificationEmail = async (email, verificationCode) => {
+  const sendVerificationEmail = async (email) => {
+    // Generisanje verifikacionog koda
+    const verificationCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+
+    // Čuvanje koda u localStorage da bi se kasnije koristio u verifikaciji
+    localStorage.setItem("verificationCode", verificationCode);
+
     try {
       await emailjs.send(
         "service_mkmmu6n", // PROVERI Service ID
         "template_mebrk6i", // PROVERI Template ID
         {
           email,
-          message: `Your verification code is: ${verificationCode}`,
+          message: `Poštovani,
+  
+          Drago nam je što ste se registrovali na našu aplikaciju! 
+          Vaš verifikacioni kod je: ${verificationCode}
+          Molimo vas da unesete ovaj kod kako biste završili proces registracije.
+          Ukoliko niste zahtevali registraciju, slobodno zanemarite ovaj email.
+          
+          Srdačan pozdrav,
+          StayNest tim.`,
         },
         "IbzcA-zGJRSX0p6cL" // PROVERI Public Key
       );
+
+      console.log("Verifikacioni email uspešno poslat!");
     } catch (error) {
-      console.error("Error sending email:", error);
+      console.error("Greška prilikom slanja emaila:", error);
     }
   };
 

@@ -109,7 +109,7 @@ const Login = ({ closeLoginPanel }) => {
             )}
           </div>
           <div className="auth-page-button">
-            <button onClick={loginUserHandler}>Login</button>
+            <button onClick={loginUserHandler}>Prijavite se</button>
           </div>
         </form>
       </div>

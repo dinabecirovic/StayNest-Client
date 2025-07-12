@@ -1,52 +1,49 @@
-/* Stil za administratorsku kontrolnu tablu */
 .dashboard-container {
-  width: 100%;
-  _max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  text-align: center;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #f8f5f2;
+  min-height: 100vh;
 }
 
-/* Naslov */
-.dashboard-title {
-  font-size: 26px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-/* Dugmad za prebacivanje tabela */
 .button-container {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(139, 119, 102, 0.1);
 }
 
 .button-container button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: 0.3s ease-in-out;
-  background: #ddd;
-  color: #333;
-}
-
-.button-container button.active {
-  background: #4caf50;
-  color: white;
+  transition: all 0.2s ease;
+  background: #f8f5f2;
+  color: #725d4b;
 }
 
 .button-container button:hover {
-  background: #45a049;
+  background: #e8e1d9;
+}
+
+.button-container button.active {
+  background: #725d4b;
   color: white;
 }
 
-/* Omot za tabelu */
 .table-wrapper {
-  margin-top: 20px;
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(139, 119, 102, 0.1);
+  overflow: hidden;
+}
+
+.search-input {
+  border-radius: 2px;
 }

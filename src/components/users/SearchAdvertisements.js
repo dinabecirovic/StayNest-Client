@@ -22,7 +22,6 @@ function SearchAdvertisements({ onClose }) {
     "Crna Gora",
     "Slovenija",
     "Severna Makedonija",
-    "Kosovo",
   ];
 
   const handleSearch = async (e) => {
@@ -62,13 +61,12 @@ function SearchAdvertisements({ onClose }) {
     showModal && (
       <div className="modal-overlay">
         <div className="modal-container">
-          {/* Dugme za zatvaranje modala */}
           <button
             className="modal-close"
             onClick={() => {
               setShowModal(false);
               if (onClose) {
-                onClose(); // Pozivamo `onClose` samo ako postoji
+                onClose();
               }
             }}
           >
@@ -156,14 +154,14 @@ function SearchAdvertisements({ onClose }) {
 
             <div className="filter-buttons">
               <button type="submit" className="search-button">
-                Pogledajte proizvode
+                Prikaži bungalove
               </button>
               <button
                 type="button"
                 className="reset-button"
                 onClick={handleReset}
               >
-                Poništite
+                Poništi
               </button>
             </div>
           </form>

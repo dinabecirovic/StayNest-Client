@@ -174,7 +174,7 @@ const Navbar = ({ fetchAdvertisements }) => {
       )}
 
       {/* ✅ Refresh prop natera AdvertisementList da se ponovo učita */}
-      <AdvertisementList key={refresh} />
+      {userRole === "BungalowOwner" && <AdvertisementList key={refresh} />}
     </div>
   );
 };

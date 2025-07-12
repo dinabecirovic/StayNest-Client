@@ -43,17 +43,26 @@ function CreateAdvertisement({ onClose, onAdCreated }) {
       formData.append("numbersOfRooms", numbersOfRooms);
       formData.append("buildingArea", buildingArea);
       formData.append("location", location);
+      formData.append("price", price);
       formData.append("description", description);
       formData.append("IsAvailable", isAvailable.toString());
 
-      await axios.post("/api/Advertisement/create", formData, {
+      const response = await axios.post("/api/Advertisement/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
+      // Dobavi ID oglasa iz odgovora
+      const createdAdvertisementId = response.data.id;
+      localStorage.setItem(
+        "bungalow",
+        JSON.stringify({ id: createdAdvertisementId })
+      );
 
       setPhotos([]);
       setNumberOfRooms("");
       setBuildingArea("");
       setLocation("");
+      setPrice("");
       setDescription("");
       setIsAvailable(true);
       navigate("/advertisements_list");
@@ -155,16 +164,6 @@ function CreateAdvertisement({ onClose, onAdCreated }) {
                 onChange={(e) => setDescription(e.target.value)}
                 required
               />
-            </div>
-            <div className="form-group">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isAvailable}
-                  onChange={(e) => setIsAvailable(e.target.checked)}
-                />
-                Dostupno za iznajmljivanje
-              </label>
             </div>
             <button type="submit">Kreiraj</button>
           </form>

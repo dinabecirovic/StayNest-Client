@@ -46,8 +46,8 @@ const VerifyAccount = () => {
   return (
     <div className="verify-page">
       <form onSubmit={handleVerification}>
-        <h2>Verify Your Account</h2>
-        <label>Verification Code</label>
+        <h2>Verifikujte svoj nalog</h2>
+        <label>Verifikacioni kod</label>
         <input
           type="text"
           value={userCode}
@@ -55,7 +55,7 @@ const VerifyAccount = () => {
           placeholder="Enter the code sent to your email"
           required
         />
-        <button type="submit">Verify</button>
+        <button type="submit">Verifikuj</button>
       </form>
     </div>
   );

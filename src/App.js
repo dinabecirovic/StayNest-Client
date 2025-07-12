@@ -11,6 +11,9 @@ import AddRating from "./components/users/AddRating";
 import ReserveBungalow from "./components/users/ReserveBungalow";
 import SearchAdvertisements from "./components/users/SearchAdvertisements";
 import VerifyAccount from "./components/VerifyAccount";
+import OwnerReservations from "./components/bungalow_owner/OwnerReservations";
+import UserDashboard from "./components/users/UserDashboard";
+import BungalowReviews from "./components/users/BungalowReviews";
 
 function App() {
   return (
@@ -33,10 +36,12 @@ function App() {
             element={<CreateAdvertisement />}
           />
           <Route path="/advertisements_list" element={<AdvertisementsList />} />
-          <Route path="/user/add-rating" element={<AddRating />} />
-          <Route path="/user/reserve-bungalow" element={<ReserveBungalow />} />
+          <Route path="/user/add_rating" element={<BungalowReviews />} />
+          <Route path="/user/reserve_bungalow" element={<ReserveBungalow />} />
           <Route path="/search" element={<SearchAdvertisements />} />
           <Route path="/verify_your_account" element={<VerifyAccount />} />
+          <Route path="/owner_reservations" element={<OwnerReservations />} />
+          <Route path="/user" element={<UserDashboard />} />
         </Routes>
       </div>
     </div>

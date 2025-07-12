@@ -43,8 +43,6 @@ const AdvertisementsTable = () => {
 
   return (
     <div className="table-container">
-      <h1 className="table-title">Lista oglasa</h1>
-
       <div className="search-container">
         <input
           type="text"
