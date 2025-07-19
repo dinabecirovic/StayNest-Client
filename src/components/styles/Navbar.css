@@ -1,16 +1,28 @@
-/* Navbar stil */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700&display=swap");
+
+body {
+  padding-top: 50px;
+}
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: #f8f5f2;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #ddd;
+  padding: 0 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
+  color: #123458;
+  font-family: "Montserrat", sans-serif;
 }
 
 .icons {
@@ -30,7 +42,7 @@
   top: 60px;
   right: 0;
   width: 300px;
-  background-color: #fff;
+  background-color: #f8f5f2;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-left: 1px solid #ddd;
@@ -95,4 +107,25 @@
 
 .icons .icon:hover {
   color: #3b3b3b;
+}
+
+svg.svg-inline--fa.fa-user.icon {
+  background-color: #f8f5f2 !important;
+  color: #123458;
+}
+svg.svg-inline--fa.fa-sliders.icon {
+  background-color: #f8f5f2 !important;
+  color: #123458;
+}
+svg.svg-inline--fa.fa-plus.icon {
+  background-color: #f8f5f2 !important;
+  color: #123458;
+}
+svg.svg-inline--fa.fa-sliders.icon {
+  background-color: #f8f5f2 !important;
+  color: #123458;
+}
+svg.svg-inline--fa.fa-right-from-bracket.icon {
+  background-color: #f8f5f2 !important;
+  color: #123458;
 }

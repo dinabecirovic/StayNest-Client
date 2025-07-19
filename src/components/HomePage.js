@@ -1,10 +1,27 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { MyContext } from "../context/my-context";
-import { Euro, Users, Home, MapPin, Calendar } from "lucide-react"; // ili druge ikone koje koristiš
-import AddRating from "./users/AddRating"; // proveri putanju
-import ReserveBungalow from "./users/ReserveBungalow"; // proveri putanju
+import "../index.css";
+import {
+  Euro,
+  Users,
+  Home,
+  MapPin,
+  Calendar,
+  Shield,
+  Star,
+  Clock,
+  Award,
+  Search,
+  Heart,
+  Wifi,
+  Car,
+  Utensils,
+} from "lucide-react";
+import AddRating from "./users/AddRating";
+import ReserveBungalow from "./users/ReserveBungalow";
+import { useNavigate } from "react-router-dom";
 import "./styles/HomePage.css";
 
 const HomePage = () => {
@@ -17,7 +34,14 @@ const HomePage = () => {
   const [showReviews, setShowReviews] = useState(false);
   const [reservations, setReservations] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
-  const { userId } = useContext(MyContext); // Dodaj korisnički kontekst ako postoji
+  const { userId } = useContext(MyContext);
+  const advertisementsRef = useRef(null);
+  const navigate = useNavigate();
+  const { currentUser } = useContext(MyContext);
+
+  const scrollToAdvertisements = () => {
+    advertisementsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const fetchAdvertisements = async () => {
     try {
@@ -57,185 +81,298 @@ const HomePage = () => {
     setShowReviews(true);
   };
 
+  const features = [
+    {
+      icon: <Shield className="feature-icon" />,
+      title: "Verifikovani vlasnici",
+      description: "Svi naši bungalovi su provereni i potvrđeni",
+    },
+    {
+      icon: <Star className="feature-icon" />,
+      title: "Najbolje ocene",
+      description: "Samo najkvalitetniji smeštaj sa visokim ocenama",
+    },
+    {
+      icon: <Clock className="feature-icon" />,
+      title: "Brza rezervacija",
+      description: "Rezervišite svoj bungalov u samo nekoliko klikova",
+    },
+  ];
+
+  const howItWorks = [
+    {
+      title: "Pretražite",
+      description: "Pronađite idealan bungalov za vašu destinaciju",
+      icon: <Search className="step-icon" />,
+      onClick: scrollToAdvertisements,
+    },
+    {
+      title: "Rezervišite",
+      description: "Jednostavno rezervišite željeni termin",
+      icon: <Calendar className="step-icon" />,
+      onClick: () => {
+        if (!currentUser) {
+          navigate("/auth");
+        } else {
+          scrollToAdvertisements();
+        }
+      },
+    },
+    {
+      title: "Uživajte",
+      description: "Opustite se u vašem mediteranskom raju",
+      icon: <Heart className="step-icon" />,
+      onClick: scrollToAdvertisements,
+    },
+  ];
+
+  const stats = [
+    { number: "500+", label: "Bungalova" },
+    { number: "50+", label: "Destinacija" },
+    { number: "10k+", label: "Zadovoljnih gostiju" },
+    { number: "4.8", label: "Prosečna ocena" },
+  ];
+
   return (
     <div className="home-container">
-      <motion.div
-        className="hero-section"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <h1>Dobrodošli u Stay Nest</h1>
-        <p>Pronađite savršen bungalov za vaše putovanje.</p>
-        <motion.button
-          className="hero-button"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+      {/* Hero Section */}
+      <div className="hero-section">
+        <video autoPlay muted loop className="background-video">
+          <source src="/videos/bg-video.mp4" type="video/mp4" />
+          Vaš pregledač ne podržava video tag.
+        </video>
+
+        <motion.div
+          className="hero-content"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
         >
-          Rezerviši sada
-        </motion.button>
-      </motion.div>
+          <h1>Mediteranski Bungalovi</h1>
+          <p>
+            Otkrijte idealne bungalove uz more i uživajte u nezaboravnom odmoru
+          </p>
+        </motion.div>
+      </div>
 
-      <div className="advertisements-container">
-        {error && <div className="error-message">{error}</div>}
+      <section className="stats-section">
+        <div className="container">
+          <div className="stats-grid">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                className="stat-item"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="stat-number">{stat.number}</div>
+                <div className="stat-label">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        <div className="advertisements-grid">
-          {advertisements.map((ad) => (
-            <div
-              key={ad.id}
-              className="ad-card"
-              onClick={() => handleCardClick(ad)}
-            >
-              <div className="ad-image">
-                <img src={ad.urlPhotos[0]} alt={ad.location} />
-                <div className="ad-price">
-                  <Euro size={16} />
-                  {ad.price}/noć
+      <section className="how-it-works-section">
+        <div className="container">
+          <motion.div
+            className="section-header"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2>Kako funkcioniše</h2>
+            <p>Jednostavan proces do vašeg idealnog odmora</p>
+          </motion.div>
+
+          <div className="steps-grid">
+            {howItWorks.map((step, index) => (
+              <motion.div
+                key={index}
+                className="step-card"
+                onClick={step.onClick}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+              >
+                <div className="step-number">{step.step}</div>
+                {step.icon}
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="advertisements-section" ref={advertisementsRef}>
+        <div className="container">
+          <motion.div
+            className="section-header"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2>Popularne destinacije</h2>
+            <p>Otkrijte najtraženije bungalove uz more</p>
+          </motion.div>
+
+          {error && <div className="error-message">{error}</div>}
+
+          <div className="advertisements-grid">
+            {advertisements.map((ad, index) => (
+              <motion.div
+                key={ad.id}
+                className="ad-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                onClick={() => handleCardClick(ad)}
+              >
+                <div className="ad-image">
+                  <img src={ad.urlPhotos[0]} alt={ad.location} />
+                  <div className="ad-price">
+                    <Euro size={16} />
+                    {ad.price}/noć
+                  </div>
                 </div>
-              </div>
-              <div className="ad-content">
-                <h3>{ad.location}</h3>
-                <div className="ad-details">
-                  <span>
-                    <Users size={16} /> {ad.numbersOfRooms} osobe
-                  </span>
-                  <span>
-                    <Home size={16} /> {ad.buildingArea} m²
-                  </span>
+                <div className="ad-content">
+                  <h3>{ad.location}</h3>
+                  <div className="ad-details">
+                    <span>
+                      <Users size={16} /> {ad.numbersOfRooms} osoba
+                    </span>
+                    <span>
+                      <Home size={16} /> {ad.buildingArea} m²
+                    </span>
+                  </div>
                 </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {selectedAd && (
+        <div className="details-modal">
+          <div className="modal-content">
+            <button className="close-m-button" onClick={handleCloseDetails}>
+              ×
+            </button>
+
+            <div className="image-gallery">
+              <img
+                src={selectedAd.urlPhotos[currentImageIndex]}
+                alt={selectedAd.location}
+              />
+              <button
+                className="gallery-nav prev"
+                onClick={() =>
+                  setCurrentImageIndex(
+                    (prev) =>
+                      (prev - 1 + selectedAd.urlPhotos.length) %
+                      selectedAd.urlPhotos.length
+                  )
+                }
+              >
+                ‹
+              </button>
+              <button
+                className="gallery-nav next"
+                onClick={() =>
+                  setCurrentImageIndex(
+                    (prev) => (prev + 1) % selectedAd.urlPhotos.length
+                  )
+                }
+              >
+                ›
+              </button>
+              <div className="image-counter">
+                {currentImageIndex + 1} / {selectedAd.urlPhotos.length}
               </div>
             </div>
-          ))}
-        </div>
 
-        {selectedAd && (
-          <div className="details-modal">
-            <div className="modal-content">
-              <button className="close-button" onClick={handleCloseDetails}>
-                ×
+            <div className="tabs">
+              <button
+                className={`tab ${activeTab === "details" ? "active" : ""}`}
+                onClick={() => setActiveTab("details")}
+              >
+                DETALjI O BUNGALOVU
               </button>
+              <button
+                className={`tab ${activeTab === "reviews" ? "active" : ""}`}
+                onClick={() => {
+                  setActiveTab("reviews");
+                  handleShowReviews();
+                }}
+              >
+                OCENE I RECENZIJE
+              </button>
+              <button
+                className={`tab ${activeTab === "reservation" ? "active" : ""}`}
+                onClick={() => setActiveTab("reservation")}
+              >
+                REZERVIŠI TERMIN
+              </button>
+            </div>
 
-              <div className="image-gallery">
-                <img
-                  src={selectedAd.urlPhotos[currentImageIndex]}
-                  alt={selectedAd.location}
-                />
-                <button
-                  className="gallery-nav prev"
-                  onClick={() =>
-                    setCurrentImageIndex(
-                      (prev) =>
-                        (prev - 1 + selectedAd.urlPhotos.length) %
-                        selectedAd.urlPhotos.length
-                    )
-                  }
-                >
-                  ‹
-                </button>
-                <button
-                  className="gallery-nav next"
-                  onClick={() =>
-                    setCurrentImageIndex(
-                      (prev) => (prev + 1) % selectedAd.urlPhotos.length
-                    )
-                  }
-                >
-                  ›
-                </button>
-                <div className="image-counter">
-                  {currentImageIndex + 1} / {selectedAd.urlPhotos.length}
+            <div className="tab-content">
+              {activeTab === "details" && (
+                <div className="details-content">
+                  <div className="detail-grid">
+                    <div className="detail-item">
+                      <MapPin size={20} /> <span>{selectedAd.location}</span>
+                    </div>
+                    <div className="detail-item">
+                      <Users size={20} />{" "}
+                      <span>{selectedAd.numbersOfRooms} Osoba</span>
+                    </div>
+                    <div className="detail-item">
+                      <Home size={20} />{" "}
+                      <span>{selectedAd.buildingArea} m²</span>
+                    </div>
+                    <div className="detail-item">
+                      <Calendar size={20} />{" "}
+                      <span>
+                        {selectedAd.isAvailable
+                          ? "Oglas je dostupan."
+                          : "Oglas nije dostupan."}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="description">
+                    <h3>Opis</h3>
+                    <p>{selectedAd.description}</p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="tabs">
-                <button
-                  className={`tab ${activeTab === "details" ? "active" : ""}`}
-                  onClick={() => setActiveTab("details")}
-                >
-                  Detalji
-                </button>
-                <button
-                  className={`tab ${activeTab === "reviews" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveTab("reviews");
-                    handleShowReviews();
-                  }}
-                >
-                  Ocene
-                </button>
-                <button
-                  className={`tab ${
-                    activeTab === "reservation" ? "active" : ""
-                  }`}
-                  onClick={() => setActiveTab("reservation")}
-                >
-                  Rezerviši termin
-                </button>
-              </div>
-
-              <div className="tab-content">
-                {activeTab === "details" && (
-                  <div className="details-content">
-                    <h2>{selectedAd.location}</h2>
-                    <div className="detail-grid">
-                      <div className="detail-item">
-                        <MapPin size={20} /> <span>{selectedAd.location}</span>
-                      </div>
-                      <div className="detail-item">
-                        <Users size={20} />{" "}
-                        <span>{selectedAd.numbersOfRooms} Osobe</span>
-                      </div>
-                      <div className="detail-item">
-                        <Home size={20} />{" "}
-                        <span>{selectedAd.buildingArea} m²</span>
-                      </div>
-                      <div className="detail-item">
-                        <Calendar size={20} />{" "}
-                        <span>
-                          {selectedAd.isAvailable
-                            ? "Oglas je dostupan."
-                            : "Oglas nije dostupan."}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="description">
-                      <h3>Opis</h3>
-                      <p>{selectedAd.description}</p>
-                    </div>
-                  </div>
-                )}
-                {activeTab === "reviews" && (
-                  <div className="reviews-content">
-                    <h3>Ocene</h3>
-                    {reservations.some(
-                      (r) =>
-                        r.bungalowId === selectedAd.id && r.userId === userId
-                    ) ? (
-                      <AddRating bungalowId={selectedAd.id} />
-                    ) : (
-                      <p className="no-reviews">
-                        Morate prvo rezervisati da biste ocenili.
-                      </p>
-                    )}
-                  </div>
-                )}
-                {activeTab === "reservation" && (
-                  <div className="reservation-content">
-                    <ReserveBungalow
-                      advertisementId={selectedAd.id}
-                      userId={userId}
-                    />
-                  </div>
-                )}
-              </div>
+              )}
+              {activeTab === "reviews" && (
+                <div className="reviews-content">
+                  <h3>Ocene</h3>
+                  {reservations.some(
+                    (r) => r.bungalowId === selectedAd.id && r.userId === userId
+                  ) ? (
+                    <AddRating bungalowId={selectedAd.id} />
+                  ) : (
+                    <p className="no-reviews">
+                      Morate prvo rezervisati da biste ocenili.
+                    </p>
+                  )}
+                </div>
+              )}
+              {activeTab === "reservation" && (
+                <div className="reservation-content">
+                  <ReserveBungalow
+                    advertisementId={selectedAd.id}
+                    userId={userId}
+                  />
+                </div>
+              )}
             </div>
           </div>
-        )}
-      </div>
-
-      <div className="footer">
-        <p>© 2025 Stay Nest. Sva prava zadržana.</p>
-      </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,283 @@
+.add-rating-container {
+  max-width: 600px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.rating-card {
+  background-color: #f8f5f2 !important;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.rating-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.rating-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 32px 0;
+  text-align: center !important;
+  line-height: 1.2;
+}
+
+.rating-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.rating-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.rating-label {
+  font-size: 18px;
+  font-weight: 500;
+  color: #374151;
+  margin: 0;
+}
+
+.stars-container {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+
+.star {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.star:hover {
+  background-color: #fef3c7;
+  transform: scale(1.1);
+}
+
+.star:focus {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+.star svg {
+  transition: all 0.2s ease;
+}
+
+.star.filled svg {
+  filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.3));
+}
+
+.star:hover svg {
+  transform: scale(1.1);
+}
+
+.rating-text {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.comment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comment-label {
+  font-size: 16px;
+  color: #374151;
+  margin: 0;
+}
+
+.comment-textarea {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1f2937;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.comment-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background-color: #fefefe;
+}
+
+.comment-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.submit-button {
+  background: #123458;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 56px;
+  align-self: center;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .add-rating-container {
+    margin: 16px auto;
+    padding: 0 12px;
+  }
+
+  .rating-card {
+    padding: 24px 20px;
+    border-radius: 12px;
+  }
+
+  .rating-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+    text-align: center !important;
+  }
+
+  .rating-form {
+    gap: 24px;
+  }
+
+  .stars-container {
+    gap: 4px;
+  }
+
+  .star {
+    padding: 6px;
+  }
+
+  .star svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .comment-textarea {
+    padding: 12px;
+    font-size: 14px;
+    min-height: 100px;
+  }
+
+  .submit-button {
+    padding: 14px 24px;
+    font-size: 14px;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rating-card {
+    padding: 20px 16px;
+    margin: 12px;
+  }
+
+  .rating-title {
+    font-size: 18px;
+    text-align: center !important;
+  }
+
+  .stars-container {
+    gap: 2px;
+  }
+
+  .star svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Animation for form submission */
+@keyframes submitSuccess {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.rating-card.submitted {
+  animation: submitSuccess 0.6s ease;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .star,
+  .submit-button,
+  .comment-textarea,
+  .rating-card {
+    transition: none;
+  }
+
+  .star:hover {
+    transform: none;
+  }
+
+  .submit-button:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .rating-card {
+    border: 2px solid #000000;
+  }
+
+  .comment-textarea {
+    border: 2px solid #000000;
+  }
+
+  .star svg {
+    stroke-width: 2;
+  }
+}

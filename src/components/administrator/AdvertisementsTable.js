@@ -72,8 +72,17 @@ const AdvertisementsTable = () => {
             <tr key={ad.id}>
               <td>{ad.id}</td>
               <td>
-                <img src={ad.urlPhoto} className="table-image" />
+                {ad.urlPhotos && ad.urlPhotos.length > 0 ? (
+                  <img
+                    src={ad.urlPhotos[0]}
+                    className="table-image"
+                    alt="Slika oglasa"
+                  />
+                ) : (
+                  <span>Nema slike</span>
+                )}
               </td>
+
               <td>{ad.numbersOfRooms}</td>
               <td>{ad.buildingArea} m²</td>
               <td>{ad.location}</td>

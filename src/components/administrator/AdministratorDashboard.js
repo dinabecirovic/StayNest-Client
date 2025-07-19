@@ -8,7 +8,6 @@ const AdministratorDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      {/* Dugmad za izbor prikaza */}
       <div className="button-container">
         <button
           className={selectedTable === "users" ? "active" : ""}
@@ -24,7 +23,6 @@ const AdministratorDashboard = () => {
         </button>
       </div>
 
-      {/* Prikaz odgovarajuće tabele */}
       <div className="table-wrapper">
         {selectedTable === "users" ? <UsersTable /> : <AdvertisementsTable />}
       </div>

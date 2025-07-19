@@ -6,7 +6,7 @@ import { MyContext } from "../context/my-context";
 import { useNavigate } from "react-router-dom";
 import "../components/Navbar.js";
 
-const Registration = ({ closeRegisterPanel }) => {
+const Registration = () => {
   const [roles, setRoles] = useState([]);
   const [userRole, setUserRole] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -54,7 +54,7 @@ const Registration = ({ closeRegisterPanel }) => {
 
     try {
       await emailjs.send(
-        "service_mkmmu6n", // PROVERI Service ID
+        "service_wnhlntl", // PROVERI Service ID
         "template_mebrk6i", // PROVERI Template ID
         {
           email,
@@ -68,7 +68,7 @@ const Registration = ({ closeRegisterPanel }) => {
           Srdačan pozdrav,
           StayNest tim.`,
         },
-        "IbzcA-zGJRSX0p6cL" // PROVERI Public Key
+        "O-jZAcUmxmcGs6ghV" // PROVERI Public Key
       );
 
       console.log("Verifikacioni email uspešno poslat!");
@@ -159,7 +159,6 @@ const Registration = ({ closeRegisterPanel }) => {
         password,
       })
     );
-    closeRegisterPanel();
     await sendVerificationEmail(email, verificationCode);
 
     navigate("/verify_your_account");
@@ -170,7 +169,7 @@ const Registration = ({ closeRegisterPanel }) => {
       <div className="auth-page-div">
         <form onSubmit={onSubmitHandler}>
           <div className="auth-page-input">
-            <select
+            {/*<select
               value={userRole}
               onChange={(e) => setUserRole(e.target.value)}
             >
@@ -182,6 +181,27 @@ const Registration = ({ closeRegisterPanel }) => {
                   {role === "User" ? "Korisnik" : "Vlasnik bungalova"}
                 </option>
               ))}
+            </select>
+            */}
+
+            <select
+              value={userRole}
+              onChange={(e) => setUserRole(e.target.value)}
+            >
+              <option value="" disabled>
+                Prijavite se kao
+              </option>
+              {roles
+                .filter((role) => role !== "Administrator")
+                .map((role, index) => (
+                  <option key={index} value={role}>
+                    {role === "User"
+                      ? "Korisnik"
+                      : role === "BungalowOwner"
+                      ? "Vlasnik bungalova"
+                      : role}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="auth-page-input">

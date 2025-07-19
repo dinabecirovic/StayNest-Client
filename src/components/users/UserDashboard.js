@@ -3,6 +3,7 @@ import axios from "axios";
 import { Star, MapPin, Home, Users, Euro, Calendar } from "lucide-react";
 import "../styles/AdvertisementsList.css";
 import AddRating from "./AddRating";
+import RatingList from "../users/RatingList";
 import ReserveBungalow from "./ReserveBungalow";
 import SearchAdvertisements from "./SearchAdvertisements";
 
@@ -111,40 +112,43 @@ function UserDashboard({ advertisementId, userId }) {
       {error && <div className="error-message">{error}</div>}
 
       <div className="advertisements-grid">
-        {advertisements.map((ad) => (
-          <div
-            key={ad.id}
-            className="ad-card"
-            onClick={() => handleCardClick(ad)}
-          >
-            <div className="ad-image">
-              <img src={ad.urlPhotos[0]} alt={ad.location} />
-              <div className="ad-price">
-                <Euro size={16} />
-                {ad.price}/noć
+        {advertisements
+          .slice()
+          .reverse()
+          .map((ad) => (
+            <div
+              key={ad.id}
+              className="ad-card"
+              onClick={() => handleCardClick(ad)}
+            >
+              <div className="ad-image">
+                <img src={ad.urlPhotos[0]} alt={ad.location} />
+                <div className="ad-price">
+                  <Euro size={16} />
+                  {ad.price}/noć
+                </div>
+              </div>
+              <div className="ad-content">
+                <h3>{ad.location}</h3>
+                <div className="ad-details">
+                  <span>
+                    <Users size={16} />
+                    {ad.numbersOfRooms} osobe
+                  </span>
+                  <span>
+                    <Home size={16} />
+                    {ad.buildingArea} m²
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="ad-content">
-              <h3>{ad.location}</h3>
-              <div className="ad-details">
-                <span>
-                  <Users size={16} />
-                  {ad.numbersOfRooms} osobe
-                </span>
-                <span>
-                  <Home size={16} />
-                  {ad.buildingArea} m²
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       {selectedAd && (
         <div className="details-modal">
           <div className="modal-content">
-            <button className="close-button" onClick={handleCloseDetails}>
+            <button className="close-m-button" onClick={handleCloseDetails}>
               ×
             </button>
 
@@ -185,7 +189,7 @@ function UserDashboard({ advertisementId, userId }) {
                 className={`tab ${activeTab === "details" ? "active" : ""}`}
                 onClick={() => setActiveTab("details")}
               >
-                Detalji
+                DETALJI O BUNGALOVU
               </button>
               <button
                 className={`tab ${activeTab === "reviews" ? "active" : ""}`}
@@ -194,21 +198,19 @@ function UserDashboard({ advertisementId, userId }) {
                   handleShowReviews();
                 }}
               >
-                Ocene
+                OCENE I RECENZIJE
               </button>
               <button
                 className={`tab ${activeTab === "reservation" ? "active" : ""}`}
                 onClick={() => setActiveTab("reservation")}
               >
-                Rezerviši termin
+                REZERVIŠI TERMIN
               </button>
             </div>
 
             <div className="tab-content">
               {activeTab === "details" && (
                 <div className="details-content">
-                  <h2>{selectedAd.location}</h2>
-
                   <div className="detail-grid">
                     <div className="detail-item">
                       <MapPin size={20} />
@@ -241,25 +243,12 @@ function UserDashboard({ advertisementId, userId }) {
 
               {activeTab === "reviews" && (
                 <div className="reviews-content">
-                  <h3>Ocene</h3>
-
                   <AddRating
                     bungalowId={selectedAd.id}
                     onRatingSubmitted={() => fetchRatings(selectedAd.id)}
                   />
 
-                  {ratings.length > 0 ? (
-                    <ul className="ratings-list">
-                      {ratings.map((r) => (
-                        <li key={r.id}>
-                          <strong>Ocena:</strong> {r.score} ★<br />
-                          <strong>Komentar:</strong> {r.comment}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>Još nema ocena za ovaj bungalov.</p>
-                  )}
+                  <RatingList ratings={ratings} />
                 </div>
               )}
 

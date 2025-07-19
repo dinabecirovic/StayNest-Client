@@ -1,21 +1,23 @@
-/* Reset default styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Main page styles */
+h2 {
+  color: #123458;
+  text-transform: uppercase;
+  font-weight: 100;
+}
 .bungalow-page {
   min-height: 100vh;
-  background: #fff;
-  padding: 2rem 1rem;
+  background: #f8f5f2;
+  padding: 2rem 1rem !important;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Container styles */
 .bungalow-container {
   width: 100%;
   max-width: 28rem;
@@ -31,20 +33,21 @@
   margin: 0 auto;
   height: 2.5rem;
   width: 2.5rem;
-  color: #8b7766;
+  color: #123458;
 }
 
 .bungalow-title {
   margin-top: 0.5rem;
   font-size: 1.5rem;
-  color: #8b7766;
+  color: #123458;
+  font-weight: 500;
 }
 
 /* Form container styles */
 .bungalow-form-container {
-  background-color: #f5f2f0;
+  background-color: #f8f5f2;
   border-radius: 2px;
-  padding: 1.5rem;
+  padding: 1.5rem !important;
   box-shadow: 0 2px 4px rgba(139, 119, 102, 0.1);
 }
 
@@ -73,51 +76,49 @@
   transform: translateY(-50%);
   width: 1.25rem;
   height: 1.25rem;
-  color: #8b7766;
+  color: #123458;
 }
 
 /* Input styles */
 .form-input {
   width: 100%;
-  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  padding: 0.75rem 1rem 0.75rem 2.5rem !important;
   border: 1px solid #e5e0db;
   border-radius: 2px;
-  background-color: #fff;
-  color: #5c4b3c;
+  background-color: #f8f5f2;
+  color: #123458;
   font-size: 0.875rem;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #8b7766;
+  border-color: #123458;
   box-shadow: 0 0 0 2px rgba(139, 119, 102, 0.1);
 }
 
 .form-input::placeholder {
-  color: #a39589;
+  color: #123458;
 }
 
-/* Submit button styles */
-.submit-button {
+.reserve-submit-button {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1rem !important;
   border: none;
   border-radius: 2px;
-  background-color: #8b7766;
+  background-color: #123458;
   color: white;
   font-size: 0.875rem;
-  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.submit-button:hover {
-  background-color: #9a8575;
+.reserve-submit-button:hover {
+  background-color: #123458eb;
 }
 
 /* Responsive adjustments */
 @media (min-width: 640px) {
   .bungalow-page {
-    padding: 2rem;
+    padding: 2rem !important;
   }
 }

@@ -16,16 +16,9 @@ function CreateAdvertisement({ onClose, onAdCreated }) {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const locations = [
-    "Srbija",
-    "Hrvatska",
-    "Bosna i Hercegovina",
-    "Crna Gora",
-    "Slovenija",
-    "Severna Makedonija",
-    "Kosovo",
-  ];
+  const locations = ["Srbija", "Hrvatska", "Bosna i Hercegovina", "Crna Gora"];
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -36,6 +29,7 @@ function CreateAdvertisement({ onClose, onAdCreated }) {
 
   const create = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const formData = new FormData();
@@ -80,6 +74,8 @@ function CreateAdvertisement({ onClose, onAdCreated }) {
       setError(
         "Došlo je do greške prilikom kreiranja posta. Pokušajte ponovo."
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -165,7 +161,9 @@ function CreateAdvertisement({ onClose, onAdCreated }) {
                 required
               />
             </div>
-            <button type="submit">Kreiraj</button>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Kreiranje oglasa..." : "Kreiraj"}
+            </button>
           </form>
         </div>
       </div>

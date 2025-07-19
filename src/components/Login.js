@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../components/Navbar.js";
 import "./styles/Login.css";
 
-const Login = ({ closeLoginPanel }) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameMessage, setUsernameMessage] = useState(null);
@@ -65,9 +65,6 @@ const Login = ({ closeLoginPanel }) => {
       } else {
         alert("Nepoznata uloga korisnika.");
       }
-
-      // Zatvori login panel
-      closeLoginPanel();
     } catch (error) {
       console.error("Login error:", error);
       alert(

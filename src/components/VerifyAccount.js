@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../context/my-context";
 import axios from "axios";
+import "./styles/Login.css";
 
 const VerifyAccount = () => {
   const [userCode, setUserCode] = useState("");
@@ -25,7 +26,7 @@ const VerifyAccount = () => {
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userData");
 
-        //navigate("/login");
+        navigate("/login");
         const userRole = localStorage.getItem("userRole");
 
         if (userRole === "BungalowOwner") {
@@ -44,19 +45,26 @@ const VerifyAccount = () => {
   };
 
   return (
-    <div className="verify-page">
-      <form onSubmit={handleVerification}>
-        <h2>Verifikujte svoj nalog</h2>
-        <label>Verifikacioni kod</label>
-        <input
-          type="text"
-          value={userCode}
-          onChange={(e) => setUserCode(e.target.value)}
-          placeholder="Enter the code sent to your email"
-          required
-        />
-        <button type="submit">Verifikuj</button>
-      </form>
+    <div className="auth-page-container">
+      <div className="auth-page">
+        <div className="auth-page-div">
+          <form onSubmit={handleVerification}>
+            <h3>Verifikujte svoj nalog</h3>
+            <div className="auth-page-input">
+              <input
+                type="text"
+                value={userCode}
+                onChange={(e) => setUserCode(e.target.value)}
+                placeholder="Unesite verifikacioni kod"
+                required
+              />
+            </div>
+            <div className="auth-page-button">
+              <button type="submit">Verifikuj</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

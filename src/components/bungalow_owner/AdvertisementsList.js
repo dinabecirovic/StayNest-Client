@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { MapPin, Home, Users, Euro, Calendar } from "lucide-react";
 import "../styles/AdvertisementsList.css";
+import RatingList from "../users/RatingList";
+import AddRating from "../users/AddRating";
 import OwnerReservations from "./OwnerReservations";
 
 function AdvertisementList({ BungalowOwnerId }) {
@@ -28,7 +30,7 @@ function AdvertisementList({ BungalowOwnerId }) {
         }
       );
       if (Array.isArray(response.data)) {
-        setAdvertisements(response.data);
+        setAdvertisements([...response.data].reverse());
         setError("");
       } else {
         throw new Error("Error");
@@ -79,11 +81,16 @@ function AdvertisementList({ BungalowOwnerId }) {
       }
     } catch (error) {
       console.error("Greška pri učitavanju rezervacija:", error);
-      alert("Nije moguće učitati rezervacije.");
+      alert("Nema dostupnih rezervacija.");
     }
   };
 
   const deleteAdvertisement = async (advertisementId) => {
+    const potvrda = window.confirm(
+      "Da li ste sigurni da želite da izbrišete ovaj oglas?"
+    );
+    if (!potvrda) return;
+
     const token = localStorage.getItem("jwtToken");
     try {
       await axios.delete(
@@ -99,6 +106,7 @@ function AdvertisementList({ BungalowOwnerId }) {
       );
       setSelectedAd(null);
       setError("");
+      alert("Oglas je uspešno obrisan.");
     } catch (e) {
       setError("Došlo je do greške prilikom brisanja oglasa.");
     }
@@ -106,23 +114,38 @@ function AdvertisementList({ BungalowOwnerId }) {
 
   const updatePrice = async (advertisementId) => {
     const token = localStorage.getItem("jwtToken");
+
+    const ad = advertisements.find((ad) => ad.id === advertisementId);
+
+    // Proveri da li je unesena cena validna i drugačija od trenutne
+    if (!newPrice || Number(newPrice) === Number(ad.price)) {
+      alert("Unesite novu cenu koja je različita od trenutne.");
+      return;
+    }
+
     try {
       await axios.put(
         `https://localhost:7168/api/Advertisement/update-price/${advertisementId}`,
-        Number(newPrice), // Šaljemo samo broj, bez objekta
+        Number(newPrice),
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json", // JSON jer je plain broj
+            "Content-Type": "application/json",
           },
         }
       );
 
-      setAdvertisements((prev) =>
-        prev.map((ad) =>
-          ad.id === advertisementId ? { ...ad, price: newPrice } : ad
-        )
+      // Ažuriranje cene u celokupnoj listi oglasa
+      const updatedAds = advertisements.map((ad) =>
+        ad.id === advertisementId ? { ...ad, price: newPrice } : ad
       );
+      setAdvertisements(updatedAds);
+
+      // Ažuriranje trenutno selektovanog oglasa u detaljima
+      if (selectedAd && selectedAd.id === advertisementId) {
+        setSelectedAd((prev) => ({ ...prev, price: newPrice }));
+      }
+
       setNewPrice("");
       alert("Ažuriranje cene je uspelo.");
     } catch (error) {
@@ -198,7 +221,7 @@ function AdvertisementList({ BungalowOwnerId }) {
       {selectedAd && (
         <div className="details-modal">
           <div className="modal-content">
-            <button className="close-button" onClick={handleCloseDetails}>
+            <button className="close-m-button" onClick={handleCloseDetails}>
               ×
             </button>
 
@@ -302,7 +325,7 @@ function AdvertisementList({ BungalowOwnerId }) {
                       Ažuriraj cenu
                     </button>
                     <button
-                      className="delete-button"
+                      className="delete-ad-button"
                       onClick={() => deleteAdvertisement(selectedAd.id)}
                     >
                       Izbriši oglas
@@ -316,29 +339,9 @@ function AdvertisementList({ BungalowOwnerId }) {
                   </div>
                 </div>
               )}
-              {activeTab === "reviews" && (
+              {activeTab === "reviews" && selectedAd && (
                 <div className="reviews-content">
-                  {ratings.length === 0 ? (
-                    <p>Još uvek nema recenzija za ovaj bungalov.</p>
-                  ) : (
-                    ratings.map((r) => (
-                      <div
-                        key={r.id}
-                        style={{
-                          borderBottom: "1px solid #ccc",
-                          marginBottom: "10px",
-                          paddingBottom: "10px",
-                        }}
-                      >
-                        <p>
-                          <strong>Ocena:</strong> {r.score} / 5
-                        </p>
-                        <p>
-                          <strong>Komentar:</strong> {r.comment}
-                        </p>
-                      </div>
-                    ))
-                  )}
+                  <RatingList ratings={ratings} />
                 </div>
               )}
             </div>

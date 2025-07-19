@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../styles/FilterPanel.css";
 
-function SearchAdvertisements({ onClose }) {
+function SearchAdvertisements({ onClose, onResults }) {
   const [criteria, setCriteria] = useState({
     minPrice: "",
     maxPrice: "",
@@ -31,7 +31,14 @@ function SearchAdvertisements({ onClose }) {
         "https://localhost:7168/api/Bungalow/search",
         { params: criteria }
       );
+
       setResults(response.data);
+
+      if (onResults) {
+        onResults(response.data);
+      }
+
+      setShowModal(false);
     } catch (error) {
       console.error("Greška prilikom pretrage oglasa:", error);
     }
@@ -171,7 +178,18 @@ function SearchAdvertisements({ onClose }) {
               <ul>
                 {results.map((ad) => (
                   <li key={ad.id}>
-                    {ad.title} - ${ad.price}
+                    <img
+                      src={ad.urlPhotos?.[0]}
+                      alt="Slika bungalova"
+                      style={{
+                        width: "200px",
+                        height: "auto",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <p>Lokacija: {ad.location}</p>
+                    <p>Broj soba: {ad.numbersOfRooms}</p>
+                    <p>Površina: {ad.buildingArea} m²</p>
                   </li>
                 ))}
               </ul>

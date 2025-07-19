@@ -44,9 +44,9 @@
 
 .ad-price {
   position: absolute;
-  bottom: 12px;
+  top: 12px;
   right: 12px;
-  background: rgba(114, 93, 75, 0.9);
+  background: #123458;
   color: white;
   padding: 8px 16px;
   border-radius: 2px;
@@ -54,6 +54,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  height: 20px;
 }
 
 .ad-content {
@@ -64,13 +65,13 @@
 .ad-content h3 {
   margin: 0 0 0.75rem;
   font-size: 1.3rem;
-  color: #5c4b3c;
+  color: #123458;
 }
 
 .ad-details {
   display: flex;
   gap: 1rem;
-  color: #8b7766;
+  color: #123458;
   font-size: 0.9rem;
 }
 
@@ -108,27 +109,26 @@
   border-radius: 0 !important;
 }
 
-.close-button {
+.close-m-button {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(92, 75, 60, 0.8);
-  color: white;
+  color: #123458;
   border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
   transition: background-color 0.2s;
+  background-color: transparent;
 }
 
-.close-button:hover {
-  background: rgba(92, 75, 60, 1);
+.close-m-button:hover {
+  font-size: 2.1rem;
 }
 
 .image-gallery {
@@ -147,11 +147,10 @@
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
-  color: white;
+  color: #123458;
   border: none;
   width: 44px;
   height: 44px;
-  border-radius: 50%;
   cursor: pointer;
   font-size: 2rem;
   display: flex;
@@ -162,6 +161,7 @@
 
 .gallery-nav:hover {
   font-size: 2.5rem;
+  background-color: transparent;
 }
 
 .gallery-nav.prev {
@@ -176,7 +176,7 @@
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  background: rgba(92, 75, 60, 0.9);
+  background: #123458;
   color: white;
   padding: 6px 12px;
   border-radius: 2px;
@@ -188,6 +188,10 @@
   padding: 1.5rem 1.5rem 0;
   gap: 1.5rem;
   border-bottom: 1px solid #e8e1d9;
+}
+
+.tabs button {
+  font-size: 84%;
 }
 
 .tab {
@@ -218,7 +222,7 @@
 .details-content h2 {
   margin: 0 0 1.5rem;
   color: #5c4b3c;
-  font-size: 1.8rem;
+  font-size: 100%;
 }
 
 .detail-grid {
@@ -245,7 +249,7 @@
 .description h3 {
   margin: 0 0 1rem;
   color: #5c4b3c;
-  font-size: 1.4rem;
+  font-size: 100%;
 }
 
 .description p {
@@ -279,7 +283,7 @@
 }
 
 .update-button,
-.delete-button,
+.delete-ad-button,
 .reserve-button {
   padding: 0;
   border: none;
@@ -289,34 +293,13 @@
   font-size: 1rem;
   transition: all 0.2s;
   height: 8vh;
+  background: #123458;
 }
 
-.update-button {
-  background: #8b7766;
-  color: white;
-}
-
-.update-button:hover {
-  background: #725d4b;
-}
-
-.delete-button {
-  background: #d4726a;
-  color: white;
-}
-
-.delete-button:hover {
-  background: #c25f57;
-}
-
-.reserve-button {
-  background: #6b8e4e;
-  color: white;
-  margin-left: auto;
-}
-
+.update-button:hover,
+.delete-ad-button:hover,
 .reserve-button:hover {
-  background: #587a3d;
+  background: #123458e6;
 }
 
 .reviews-content {
@@ -340,6 +323,191 @@
   margin-bottom: 1rem;
 }
 
+/* Base styles for modal-content */
+.modal-content {
+  position: relative;
+  z-index: 9999;
+  overflow-y: auto;
+  background: white;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Mobile devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .modal-content {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+}
+
+/* Mobile devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .modal-content {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+
+  .tabs button {
+    font-size: 75%;
+  }
+  .tab {
+    border-bottom: 2px solid transparent;
+  }
+}
+
+/* Tablets (768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .modal-content {
+    width: 95vw !important;
+    height: 95vh !important;
+    max-width: 750px !important;
+    max-height: 90vh !important;
+    padding: 16px !important;
+    margin: auto !important;
+    border-radius: 12px !important;
+    position: relative !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+/* Small desktops (992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .modal-content {
+    width: 90vw !important;
+    height: auto !important;
+    max-width: 900px !important;
+    max-height: 85vh !important;
+    padding: 24px !important;
+    margin: auto !important;
+    border-radius: 16px !important;
+    position: relative !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+/* Large desktops (1200px and up) */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  .modal-content {
+    width: 80vw !important;
+    height: auto !important;
+    max-width: 1000px !important;
+    max-height: 80vh !important;
+    padding: 32px !important;
+    margin: auto !important;
+    border-radius: 20px !important;
+    position: relative !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+/* Extra large desktops (1400px and up) */
+@media (min-width: 1400px) {
+  .modal-content {
+    width: 70vw !important;
+    height: auto !important;
+    max-width: 1200px !important;
+    max-height: 75vh !important;
+    padding: 40px !important;
+    margin: auto !important;
+    border-radius: 24px !important;
+    position: relative !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 1024px) {
+  .modal-content {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    transform: none !important;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .modal-content {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Print styles */
+@media print {
+  .modal-content {
+    width: 100% !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 20px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    z-index: auto !important;
+    position: static !important;
+    transform: none !important;
+  }
+}
+
+/* Additional mobile optimizations */
+@media (max-width: 767.98px) {
+  .modal-content .image-gallery {
+    height: 40vh !important;
+  }
+
+  .modal-content .tabs {
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+
+  .modal-content .tab {
+    min-width: 120px !important;
+    font-size: 12px !important;
+  }
+
+  .modal-content .tab-content {
+    padding: 16px !important;
+  }
+
+  .modal-content .detail-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
 @media (max-width: 1024px) {
   .advertisements-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -368,11 +536,6 @@
   }
 
   .price-input {
-    width: 100%;
-  }
-
-  .reserve-button {
-    margin-left: 0;
-    width: 100%;
+    width: 84%;
   }
 }

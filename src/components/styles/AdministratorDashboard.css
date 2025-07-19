@@ -6,12 +6,36 @@
   min-height: 100vh;
 }
 
+th {
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+td {
+  font-size: 14px;
+}
+
+.delete-button {
+  background-color: #f8f5f2;
+  color: #725d4b;
+  font-size: 14px;
+  margin: 0px;
+  padding: 0px;
+  float: left;
+}
+
+.delete-button:hover {
+  background-color: #f8f5f2;
+  color: #725d4b;
+}
+
 .button-container {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
   padding: 1rem;
-  background: white;
+  background: #f8f5f2;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(139, 119, 102, 0.1);
 }
@@ -33,17 +57,204 @@
 }
 
 .button-container button.active {
-  background: #725d4b;
+  background: #123458;
   color: white;
 }
 
 .table-wrapper {
-  background: white;
+  background: #f8f5f2;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(139, 119, 102, 0.1);
   overflow: hidden;
+  overflow-x: auto;
 }
 
 .search-input {
   border-radius: 2px;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e8e1d9;
+  font-size: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-container {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .button-container {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .button-container button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  th {
+    font-size: 11px;
+    padding: 0.5rem;
+  }
+
+  td {
+    font-size: 11px;
+    padding: 0.5rem;
+  }
+
+  .delete-button {
+    font-size: 11px;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .button-container button {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    width: 100%;
+    min-width: auto;
+  }
+
+  .table-wrapper {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-wrapper table {
+    min-width: 600px;
+  }
+
+  th {
+    font-size: 10px;
+    padding: 0.4rem 0.3rem;
+    white-space: nowrap;
+  }
+
+  td {
+    font-size: 10px;
+    padding: 0.4rem 0.3rem;
+    white-space: nowrap;
+  }
+
+  .delete-button {
+    font-size: 10px;
+    padding: 0.3rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  .search-input {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 0.75rem;
+  }
+
+  .button-container {
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .button-container button {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .table-wrapper {
+    border-radius: 4px;
+  }
+
+  .table-wrapper table {
+    min-width: 500px;
+  }
+
+  th {
+    font-size: 9px;
+    padding: 0.3rem 0.2rem;
+  }
+
+  td {
+    font-size: 9px;
+    padding: 0.3rem 0.2rem;
+  }
+
+  .delete-button {
+    font-size: 9px;
+    padding: 0.25rem 0.4rem;
+  }
+
+  .search-input {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .dashboard-container {
+    padding: 0.5rem;
+  }
+
+  .button-container {
+    padding: 0.4rem;
+    gap: 0.4rem;
+  }
+
+  .button-container button {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .table-wrapper table {
+    min-width: 450px;
+  }
+
+  th,
+  td {
+    font-size: 8px;
+    padding: 0.25rem 0.15rem;
+  }
+
+  .delete-button {
+    font-size: 8px;
+    padding: 0.2rem 0.3rem;
+  }
+
+  .search-input {
+    padding: 0.4rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .dashboard-container {
+    padding: 0.75rem;
+  }
+
+  .button-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .button-container button {
+    flex: 1;
+    min-width: 100px;
+  }
 }

@@ -14,6 +14,8 @@ import VerifyAccount from "./components/VerifyAccount";
 import OwnerReservations from "./components/bungalow_owner/OwnerReservations";
 import UserDashboard from "./components/users/UserDashboard";
 import BungalowReviews from "./components/users/BungalowReviews";
+import AuthPage from "./components/AuthPage";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -42,8 +44,10 @@ function App() {
           <Route path="/verify_your_account" element={<VerifyAccount />} />
           <Route path="/owner_reservations" element={<OwnerReservations />} />
           <Route path="/user" element={<UserDashboard />} />
+          <Route path="/auth" element={<AuthPage />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

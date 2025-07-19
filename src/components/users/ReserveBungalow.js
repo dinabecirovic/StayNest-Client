@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Calendar, Phone, User } from "lucide-react";
+import { Calendar } from "lucide-react";
 import "../styles/ReserveBungalow.css";
 
 const ReserveBungalow = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
-    phoneNumber: "",
     startDate: "",
     endDate: "",
   });
 
-  const [userId, setUserId] = useState(null);
   const [advertisementId, setAdvertisementId] = useState(null);
   const [bungalow, setBungalow] = useState(null);
 
@@ -22,23 +18,21 @@ const ReserveBungalow = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedBungalow = JSON.parse(localStorage.getItem("bungalow"));
 
-    const exstractedUserId = storedUser?.users?.id || storedUser?.id;
-    const exstractedBungalowId = storedBungalow?.id;
+    const extractedBungalowId = storedBungalow?.id;
 
-    if (!exstractedUserId) {
-      alert("Greška: prijavite se ponovo.");
-      navigate("/login");
+    if (!storedUser) {
+      alert("Morate se prijaviti da biste rezervisali bungalov.");
+      navigate("/auth");
       return;
     }
 
-    if (!exstractedBungalowId) {
+    if (!extractedBungalowId) {
       alert("Greška: Vratite se nazad i pokušajte ponovo.");
       navigate("/reserve_bungalow");
       return;
     }
 
-    setUserId(exstractedUserId);
-    setAdvertisementId(exstractedBungalowId);
+    setAdvertisementId(extractedBungalowId);
     setBungalow(storedBungalow);
   }, [navigate]);
 
@@ -49,6 +43,20 @@ const ReserveBungalow = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const now = new Date();
+    const start = new Date(formData.startDate);
+    const end = new Date(formData.endDate);
+
+    if (start <= now) {
+      alert("Ne možete zakazati termin u prošlosti.");
+      return;
+    }
+
+    if (end <= start) {
+      alert("Datum završetka mora biti posle datuma početka.");
+      return;
+    }
+
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const token = storedUser?.token;
 
@@ -58,21 +66,13 @@ const ReserveBungalow = () => {
       return;
     }
 
-    console.log(advertisementId);
-
     const reservationData = {
-      userId: parseInt(userId), // obavezno ovo!
       advertisementId: parseInt(advertisementId),
-      firstName: formData.firstname,
-      lastName: formData.lastname,
-      phoneNumber: formData.phoneNumber,
       startDate: formData.startDate,
       endDate: formData.endDate,
     };
 
     try {
-      console.log("Rezervacija koja se šalje:", reservationData);
-
       const response = await fetch(
         "https://localhost:7168/api/Bungalow/reserve",
         {
@@ -99,6 +99,12 @@ const ReserveBungalow = () => {
     }
   };
 
+  const getMinDateTime = () => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 1);
+    return now.toISOString().slice(0, 16);
+  };
+
   return (
     <div className="bungalow-page">
       <div className="bungalow-container">
@@ -110,45 +116,6 @@ const ReserveBungalow = () => {
           <form onSubmit={handleSubmit} className="bungalow-form">
             <div className="form-fields">
               <div className="input-group">
-                <User className="input-icon" />
-                <input
-                  type="text"
-                  name="firstname"
-                  placeholder="Ime"
-                  value={formData.firstname}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                />
-              </div>
-
-              <div className="input-group">
-                <User className="input-icon" />
-                <input
-                  type="text"
-                  name="lastname"
-                  placeholder="Prezime"
-                  value={formData.lastname}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                />
-              </div>
-
-              <div className="input-group">
-                <Phone className="input-icon" />
-                <input
-                  type="tel"
-                  name="phoneNumber"
-                  placeholder="Telefon"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                />
-              </div>
-
-              <div className="input-group">
                 <Calendar className="input-icon" />
                 <input
                   type="datetime-local"
@@ -157,6 +124,7 @@ const ReserveBungalow = () => {
                   onChange={handleChange}
                   required
                   className="form-input"
+                  min={getMinDateTime()}
                 />
               </div>
 
@@ -169,11 +137,12 @@ const ReserveBungalow = () => {
                   onChange={handleChange}
                   required
                   className="form-input"
+                  min={formData.startDate || getMinDateTime()}
                 />
               </div>
             </div>
 
-            <button type="submit" className="submit-button">
+            <button type="submit" className="reserve-submit-button">
               Zakaži termin
             </button>
           </form>
