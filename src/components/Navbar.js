@@ -1,28 +1,17 @@
-import React, { useState, useContext } from "react"; // Import useContext
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { MyContext } from "../context/my-context"; // Ensure MyContext is correctly imported
+import { MyContext } from "../context/my-context";
 import { useNavigate } from "react-router-dom";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import AdvertisementList from "./bungalow_owner/AdvertisementsList";
-import {
-  faSlidersH,
-  faSignOutAlt,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons"; // Corrected faPlus import
-import Login from "./Login"; // Import Login component
-import Registration from "./Registration"; // Import Registration component
+import { faSignOutAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
 import CreateAdvertisement from "./bungalow_owner/CreateAdvertisement";
-import SearchAdvertisements from "./users/SearchAdvertisements"; // Import SearchAdvertisements component
 import "./styles/Navbar.css";
 import axios from "axios";
 
 const Navbar = ({ fetchAdvertisements }) => {
   const { userRole, currentUser, setUserFunction, setRoleFunction } =
-    useContext(MyContext); // Use context for user and role
-  const [advertisements, setAdvertisements] = useState([]);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+    useContext(MyContext);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -38,8 +27,6 @@ const Navbar = ({ fetchAdvertisements }) => {
       localStorage.removeItem("user");
       axios.defaults.headers.common["Authorization"] = "";
     }
-    setIsLoginOpen(false);
-    setIsRegisterOpen(false);
 
     navigate("/");
   };
@@ -48,22 +35,8 @@ const Navbar = ({ fetchAdvertisements }) => {
     setRefresh((prev) => !prev);
   };
 
-  const toggleLoginPanel = () => {
-    setIsLoginOpen(!isLoginOpen);
-    setIsRegisterOpen(false);
-  };
-
-  const toggleFilterPanel = () => {
-    setIsFilterOpen(!isFilterOpen);
-  };
-
   const toggleCreatePanel = () => {
     setIsCreateOpen(!isCreateOpen);
-  };
-
-  const toggleRegisterPanel = () => {
-    setIsRegisterOpen(!isRegisterOpen);
-    setIsLoginOpen(false);
   };
 
   return (
@@ -122,12 +95,6 @@ const Navbar = ({ fetchAdvertisements }) => {
           )}
         </div>
       </nav>
-
-      {isFilterOpen && (
-        <div className="filter-panel">
-          <SearchAdvertisements />
-        </div>
-      )}
 
       {isCreateOpen && (
         <CreateAdvertisement

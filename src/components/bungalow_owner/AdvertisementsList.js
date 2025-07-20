@@ -3,7 +3,6 @@ import axios from "axios";
 import { MapPin, Home, Users, Euro, Calendar } from "lucide-react";
 import "../styles/AdvertisementsList.css";
 import RatingList from "../users/RatingList";
-import AddRating from "../users/AddRating";
 import OwnerReservations from "./OwnerReservations";
 
 function AdvertisementList({ BungalowOwnerId }) {
@@ -42,6 +41,7 @@ function AdvertisementList({ BungalowOwnerId }) {
 
   useEffect(() => {
     fetchAdvertisements();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchRatings = async (bungalowId) => {
@@ -169,20 +169,6 @@ function AdvertisementList({ BungalowOwnerId }) {
     console.log("Clicked on Pregledaj rezervacije for ID:", advertisementId);
     setSelectedAdvertisementId(advertisementId);
     fetchReservations(advertisementId);
-  };
-  const nextImage = () => {
-    if (selectedAd) {
-      setCurrentImageIndex((prev) => (prev + 1) % selectedAd.urlPhotos.length);
-    }
-  };
-
-  const prevImage = () => {
-    if (selectedAd) {
-      setCurrentImageIndex(
-        (prev) =>
-          (prev - 1 + selectedAd.urlPhotos.length) % selectedAd.urlPhotos.length
-      );
-    }
   };
 
   return (

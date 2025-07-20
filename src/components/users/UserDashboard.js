@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Star, MapPin, Home, Users, Euro, Calendar } from "lucide-react";
+import { MapPin, Home, Users, Euro, Calendar } from "lucide-react";
 import "../styles/AdvertisementsList.css";
 import AddRating from "./AddRating";
 import RatingList from "../users/RatingList";
 import ReserveBungalow from "./ReserveBungalow";
-import SearchAdvertisements from "./SearchAdvertisements";
 
 function UserDashboard({ advertisementId, userId }) {
   const [advertisements, setAdvertisements] = useState([]);
@@ -13,10 +12,6 @@ function UserDashboard({ advertisementId, userId }) {
   const [selectedAd, setSelectedAd] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("details");
-  const [showReservationForm, setShowReservationForm] = useState(false);
-  const [showReviews, setShowReviews] = useState(false);
-  const [reservations, setReservations] = useState([]);
-  const [showSearch, setShowSearch] = useState(false);
   const [ratings, setRatings] = useState("");
 
   /*const [reservations, setReservations] = useState({
@@ -65,46 +60,15 @@ function UserDashboard({ advertisementId, userId }) {
     setSelectedAd(ad);
     setCurrentImageIndex(0);
     setActiveTab("details");
-    setShowReservationForm(false);
   };
 
   const handleCloseDetails = () => {
     setSelectedAd(null);
     setCurrentImageIndex(0);
-    setShowReservationForm(false);
-    setShowReviews(false);
   };
 
   const handleShowReviews = () => {
     fetchRatings(selectedAd.id);
-    setShowReviews(true);
-  };
-
-  const handleReserveClick = () => {
-    setShowReservationForm(true);
-  };
-
-  const handleReserve = async (e) => {
-    e.preventDefault();
-    const reservation = {
-      advertisementIdId: selectedAd.id,
-      userId,
-      startDate: e.target.startDate.value,
-      endDate: e.target.endDate.value,
-    };
-
-    try {
-      await axios.post(
-        "https://localhost:7168/api/Bungalow/reserve",
-        reservation
-      );
-      alert("Reservation successful!");
-      setReservations([...reservations, reservation]);
-      setShowReservationForm(false);
-    } catch (error) {
-      console.error("Error reserving bungalow:", error);
-      alert("Reservation failed.");
-    }
   };
 
   return (

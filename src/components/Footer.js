@@ -18,9 +18,9 @@ const Footer = () => {
           <div className="footer-section">
             <h4>Pratite nas</h4>
             <div className="social-links">
-              <a href="#">Facebook</a>
-              <a href="#">Instagram</a>
-              <a href="#">Twitter</a>
+              <a href="https://www.facebook.com/">Facebook</a>
+              <a href="https://www.instagram.com/">Instagram</a>
+              <a href="https://www.twitter.com/">Twitter</a>
             </div>
           </div>
         </div>

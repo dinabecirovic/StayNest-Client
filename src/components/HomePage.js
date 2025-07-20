@@ -9,17 +9,9 @@ import {
   Home,
   MapPin,
   Calendar,
-  Shield,
-  Star,
-  Clock,
-  Award,
   Search,
   Heart,
-  Wifi,
-  Car,
-  Utensils,
 } from "lucide-react";
-import AddRating from "./users/AddRating";
 import ReserveBungalow from "./users/ReserveBungalow";
 import { useNavigate } from "react-router-dom";
 import "./styles/HomePage.css";
@@ -30,14 +22,9 @@ const HomePage = () => {
   const [selectedAd, setSelectedAd] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("details");
-  const [showReservationForm, setShowReservationForm] = useState(false);
-  const [showReviews, setShowReviews] = useState(false);
-  const [reservations, setReservations] = useState([]);
-  const [showSearch, setShowSearch] = useState(false);
-  const { userId } = useContext(MyContext);
+  const { userId, currentUser } = useContext(MyContext);
   const advertisementsRef = useRef(null);
   const navigate = useNavigate();
-  const { currentUser } = useContext(MyContext);
 
   const scrollToAdvertisements = () => {
     advertisementsRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -67,37 +54,14 @@ const HomePage = () => {
     setSelectedAd(ad);
     setCurrentImageIndex(0);
     setActiveTab("details");
-    setShowReservationForm(false);
   };
 
   const handleCloseDetails = () => {
     setSelectedAd(null);
     setCurrentImageIndex(0);
-    setShowReservationForm(false);
-    setShowReviews(false);
   };
 
-  const handleShowReviews = () => {
-    setShowReviews(true);
-  };
-
-  const features = [
-    {
-      icon: <Shield className="feature-icon" />,
-      title: "Verifikovani vlasnici",
-      description: "Svi naši bungalovi su provereni i potvrđeni",
-    },
-    {
-      icon: <Star className="feature-icon" />,
-      title: "Najbolje ocene",
-      description: "Samo najkvalitetniji smeštaj sa visokim ocenama",
-    },
-    {
-      icon: <Clock className="feature-icon" />,
-      title: "Brza rezervacija",
-      description: "Rezervišite svoj bungalov u samo nekoliko klikova",
-    },
-  ];
+  const handleShowReviews = () => {};
 
   const howItWorks = [
     {
@@ -350,17 +314,12 @@ const HomePage = () => {
               {activeTab === "reviews" && (
                 <div className="reviews-content">
                   <h3>Ocene</h3>
-                  {reservations.some(
-                    (r) => r.bungalowId === selectedAd.id && r.userId === userId
-                  ) ? (
-                    <AddRating bungalowId={selectedAd.id} />
-                  ) : (
-                    <p className="no-reviews">
-                      Morate prvo rezervisati da biste ocenili.
-                    </p>
-                  )}
+                  <p className="no-reviews">
+                    Morate prvo rezervisati da biste ocenili.
+                  </p>
                 </div>
               )}
+
               {activeTab === "reservation" && (
                 <div className="reservation-content">
                   <ReserveBungalow

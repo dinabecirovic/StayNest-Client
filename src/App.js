@@ -7,7 +7,6 @@ import Navbar from "./components/Navbar"; // Navbar je uvek dostupan
 import AdministratorDashboard from "./components/administrator/AdministratorDashboard";
 import CreateAdvertisement from "./components/bungalow_owner/CreateAdvertisement";
 import AdvertisementsList from "./components/bungalow_owner/AdvertisementsList";
-import AddRating from "./components/users/AddRating";
 import ReserveBungalow from "./components/users/ReserveBungalow";
 import SearchAdvertisements from "./components/users/SearchAdvertisements";
 import VerifyAccount from "./components/VerifyAccount";

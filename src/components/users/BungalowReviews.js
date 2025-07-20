@@ -58,6 +58,7 @@ function BungalowReviews({ bungalowId }) {
   // Učitavanje recenzija prilikom prikaza komponente
   useEffect(() => {
     fetchReviews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bungalowId]);
 
   return (

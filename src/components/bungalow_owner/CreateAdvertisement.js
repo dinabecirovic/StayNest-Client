@@ -12,9 +12,8 @@ function CreateAdvertisement({ onClose, onAdCreated }) {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [isAvailable, setIsAvailable] = useState(true);
-  const [createdAd, setCreatedAd] = useState(null);
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [setError] = useState("");
   const [showModal, setShowModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 

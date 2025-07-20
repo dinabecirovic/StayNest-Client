@@ -9,8 +9,7 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState(""); // Pretraga
 
   const fetchUsers = async () => {
@@ -19,13 +18,12 @@ const UsersTable = () => {
       setUsers(response.data);
     } catch (err) {
       setError("Greška pri dohvatanju korisnika.");
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteUser = async (userId) => {

@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import emailjs from "@emailjs/browser";
-import { MyContext } from "../context/my-context";
 import { useNavigate } from "react-router-dom";
 import "../components/Navbar.js";
 
@@ -21,7 +20,6 @@ const Registration = () => {
   const [usernameMessage, setUsernameMessage] = useState(null);
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState(null);
-  const { setUserFunction } = useContext(MyContext);
   const [visible, setVisible] = useState(true);
   const navigate = useNavigate();
 
@@ -113,6 +111,15 @@ const Registration = () => {
       }
     }
   }, [birthDate]);
+
+  //EMAIL
+  useEffect(() => {
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailMessage("Unesite validnu email adresu.");
+    } else {
+      setEmailMessage(null);
+    }
+  }, [email]);
 
   // VALIDACIJA: KORISNIČKO IME (SAMO MALA SLOVA)
   useEffect(() => {
@@ -258,11 +265,17 @@ const Registration = () => {
           </div>
           <div className="auth-page-input">
             <input
-              type="password"
+              type={visible ? "password" : "text"}
               placeholder="Lozinka"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
+            <span
+              className="password-toggle"
+              onClick={() => setVisible((prev) => !prev)}
+            >
+              {visible ? <FaRegEye /> : <FaRegEyeSlash />}
+            </span>
             {passwordMessage && (
               <p className="input-alert">{passwordMessage}</p>
             )}

@@ -12,7 +12,7 @@ const ReserveBungalow = () => {
   });
 
   const [advertisementId, setAdvertisementId] = useState(null);
-  const [bungalow, setBungalow] = useState(null);
+  const [, setBungalow] = useState(null);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -34,6 +34,7 @@ const ReserveBungalow = () => {
 
     setAdvertisementId(extractedBungalowId);
     setBungalow(storedBungalow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   const handleChange = (e) => {
