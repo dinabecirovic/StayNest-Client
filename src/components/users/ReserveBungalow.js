@@ -75,7 +75,7 @@ const ReserveBungalow = () => {
 
     try {
       const response = await fetch(
-        "https://localhost:7168/api/Bungalow/reserve",
+        "https://staynest-api-production.up.railway.app/api/Bungalow/reserve",
         {
           method: "POST",
           headers: {

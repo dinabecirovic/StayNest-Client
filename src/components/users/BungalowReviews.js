@@ -12,7 +12,7 @@ function BungalowReviews({ bungalowId }) {
     const token = localStorage.getItem("jwtToken");
     try {
       const response = await axios.get(
-        `https://localhost:7168/api/Bungalow/${bungalowId}/reviews`,
+        `https://staynest-api-production.up.railway.app/api/Bungalow/${bungalowId}/reviews`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ function BungalowReviews({ bungalowId }) {
 
     try {
       await axios.post(
-        "https://localhost:7168/api/Bungalow/rate",
+        "https://staynest-api-production.up.railway.app/api/Bungalow/rate",
         {
           UserId: userId,
           BungalowId: bungalowId,

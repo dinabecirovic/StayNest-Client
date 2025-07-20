@@ -18,7 +18,10 @@ const VerifyAccount = () => {
       const userData = JSON.parse(localStorage.getItem("userData"));
 
       try {
-        await axios.post("https://localhost:7168/api/User/register", userData);
+        await axios.post(
+          "https://staynest-api-production.up.railway.app/api/User/register",
+          userData
+        );
 
         localStorage.removeItem("verificationCode");
         localStorage.removeItem("userEmail");

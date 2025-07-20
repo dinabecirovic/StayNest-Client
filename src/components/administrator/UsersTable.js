@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/TableStyles.css";
 
-axios.defaults.baseURL = "https://localhost:7168";
+axios.defaults.baseURL = "https://staynest-api-production.up.railway.app";
 axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
   "token"
 )}`;

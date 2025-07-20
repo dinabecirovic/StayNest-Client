@@ -21,7 +21,7 @@ function AdvertisementList({ BungalowOwnerId }) {
     const token = localStorage.getItem("jwtToken");
     try {
       const response = await axios.get(
-        `https://localhost:7168/api/Advertisement/owner/${BungalowOwnerId}`,
+        `https://staynest-api-production.up.railway.app/api/Advertisement/owner/${BungalowOwnerId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ function AdvertisementList({ BungalowOwnerId }) {
   const fetchRatings = async (bungalowId) => {
     try {
       const response = await axios.get(
-        `https://localhost:7168/api/Bungalow/ratings/${bungalowId}`
+        `https://staynest-api-production.up.railway.app/api/Bungalow/ratings/${bungalowId}`
       );
       setRatings(response.data);
     } catch (error) {
@@ -62,7 +62,7 @@ function AdvertisementList({ BungalowOwnerId }) {
 
     try {
       const response = await axios.get(
-        `https://localhost:7168/api/Advertisement/reservations/${advertisementId}`,
+        `https://staynest-api-production.up.railway.app/api/Advertisement/reservations/${advertisementId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ function AdvertisementList({ BungalowOwnerId }) {
     const token = localStorage.getItem("jwtToken");
     try {
       await axios.delete(
-        `https://localhost:7168/api/Advertisement/${advertisementId}`,
+        `https://staynest-api-production.up.railway.app/api/Advertisement/${advertisementId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -125,7 +125,7 @@ function AdvertisementList({ BungalowOwnerId }) {
 
     try {
       await axios.put(
-        `https://localhost:7168/api/Advertisement/update-price/${advertisementId}`,
+        `https://staynest-api-production.up.railway.app/api/Advertisement/update-price/${advertisementId}`,
         Number(newPrice),
         {
           headers: {

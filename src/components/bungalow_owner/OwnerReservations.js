@@ -14,7 +14,7 @@ const OwnerReservations = ({ advertisementId, onClose }) => {
       const token = localStorage.getItem("jwtToken");
       try {
         const response = await fetch(
-          `https://localhost:7168/api/Advertisement/reservations/${advertisementId}`,
+          `https://staynest-api-production.up.railway.app/api/Advertisement/reservations/${advertisementId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

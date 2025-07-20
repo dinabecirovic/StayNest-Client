@@ -33,7 +33,7 @@ const HomePage = () => {
   const fetchAdvertisements = async () => {
     try {
       const response = await axios.get(
-        "https://localhost:7168/api/Advertisement/advertisements"
+        "https://staynest-api-production.up.railway.app/api/Advertisement/advertisements"
       );
       if (Array.isArray(response.data)) {
         setAdvertisements(response.data);

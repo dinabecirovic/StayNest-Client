@@ -28,7 +28,7 @@ function SearchAdvertisements({ onClose, onResults }) {
     e.preventDefault();
     try {
       const response = await axios.get(
-        "https://localhost:7168/api/Bungalow/search",
+        "https://staynest-api-production.up.railway.app/api/Bungalow/search",
         { params: criteria }
       );
 

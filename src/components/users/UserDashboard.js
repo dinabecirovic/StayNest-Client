@@ -27,7 +27,7 @@ function UserDashboard({ advertisementId, userId }) {
   const fetchAdvertisements = async () => {
     try {
       const response = await axios.get(
-        `https://localhost:7168/api/Advertisement/advertisements`
+        `https://staynest-api-production.up.railway.app/api/Advertisement/advertisements`
       );
       if (Array.isArray(response.data)) {
         setAdvertisements(response.data);
@@ -47,7 +47,7 @@ function UserDashboard({ advertisementId, userId }) {
   const fetchRatings = async (bungalowId) => {
     try {
       const response = await axios.get(
-        `https://localhost:7168/api/Bungalow/ratings/${bungalowId}`
+        `https://staynest-api-production.up.railway.app/api/Bungalow/ratings/${bungalowId}`
       );
 
       setRatings(response.data);

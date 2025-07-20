@@ -52,11 +52,15 @@ const AddRating = ({ bungalowId, onRatingSubmitted }) => {
     try {
       const token = localStorage.getItem("jwtToken");
       console.log("Šaljem na backend:", rating);
-      await axios.post("https://localhost:7168/api/Bungalow/rate", rating, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        "https://staynest-api-production.up.railway.app/api/Bungalow/rate",
+        rating,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       alert("Hvala što ste ostavili ocenu!");
 
