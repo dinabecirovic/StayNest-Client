@@ -73,6 +73,11 @@
   line-height: 1.4;
   opacity: 1;
 }
+
+.form-group textarea {
+  font-size: 10px;
+}
+
 .form-group select {
   width: 85%;
   padding: 10px;
