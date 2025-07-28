@@ -35,7 +35,7 @@ const VerifyAccount = () => {
         } else if (userRole === "User") {
           navigate("/user_home");
         } else {
-          navigate("/");
+          navigate("/auth");
         }
       } catch (e) {
         console.error(" Greška pri registraciji nakon verifikacije:", e);

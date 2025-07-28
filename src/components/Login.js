@@ -79,6 +79,7 @@ const Login = () => {
         <form>
           <div className="auth-page-input">
             <input
+              name="username"
               type="text"
               placeholder="Korisničko ime"
               onChange={(e) => setUsername(e.target.value)}
@@ -90,6 +91,7 @@ const Login = () => {
           </div>
           <div className="auth-page-input">
             <input
+              name="password"
               type={visible ? "password" : "text"}
               placeholder="Lozinka"
               onChange={(e) => setPassword(e.target.value)}

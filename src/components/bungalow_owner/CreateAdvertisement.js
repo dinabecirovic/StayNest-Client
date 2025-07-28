@@ -13,11 +13,11 @@ function CreateAdvertisement({ onClose, onAdCreated }) {
   const [description, setDescription] = useState("");
   const [isAvailable, setIsAvailable] = useState(true);
   const navigate = useNavigate();
-  const [setError] = useState("");
+  const [, setError] = useState("");
   const [showModal, setShowModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const locations = ["Srbija", "Hrvatska", "Bosna i Hercegovina", "Crna Gora"];
+  const locations = ["Grčka", "Italija", "Španija", "Hrvatska", "Crna Gora"];
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
